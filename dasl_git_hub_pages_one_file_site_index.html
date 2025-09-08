@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Detroit African Soccer League (DASL)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" href="data:,">
+  <meta name="description" content="Detroit African Soccer League — schedule, standings, results, bylaws, contact." />
+  <style>
+    /* Simple table helpers */
+    th, td { white-space: nowrap; }
+    .container-narrow{max-width:1100px}
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900">
+  <!-- Header / Nav -->
+  <header class="bg-slate-900 text-white">
+    <div class="mx-auto container container-narrow px-4 py-6 flex items-center justify-between">
+      <h1 class="text-xl md:text-2xl font-bold tracking-wide">Detroit African Soccer League</h1>
+      <nav class="hidden md:flex gap-6 text-sm">
+        <a href="#home" class="hover:text-emerald-300">Home</a>
+        <a href="#standings" class="hover:text-emerald-300">Standings</a>
+        <a href="#results" class="hover:text-emerald-300">Results</a>
+        <a href="#schedule" class="hover:text-emerald-300">Schedule</a>
+        <a href="#governance" class="hover:text-emerald-300">Governance</a>
+        <a href="#contact" class="hover:text-emerald-300">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section id="home" class="bg-gradient-to-br from-emerald-500 to-emerald-700 text-white">
+    <div class="mx-auto container container-narrow px-4 py-12 md:py-16">
+      <div class="grid md:grid-cols-2 gap-8 items-center">
+        <div>
+          <h2 class="text-3xl md:text-4xl font-extrabold leading-tight">Welcome to the DASL</h2>
+          <p class="mt-3 md:mt-4 text-emerald-50 text-lg">Community. Sportsmanship. Competition. Follow weekly results, standings, and league news.</p>
+          <div class="mt-6 flex gap-3">
+            <a href="#standings" class="inline-flex items-center rounded-xl bg-white/95 text-slate-900 px-4 py-2 text-sm font-semibold shadow hover:bg-white">View Standings</a>
+            <a href="#schedule" class="inline-flex items-center rounded-xl ring-1 ring-white/70 px-4 py-2 text-sm font-semibold hover:bg-white/10">Upcoming Matches</a>
+          </div>
+        </div>
+        <div class="hidden md:block">
+          <div class="rounded-2xl bg-white/10 p-6 shadow-xl backdrop-blur">
+            <p class="text-sm uppercase tracking-wider text-emerald-100">Current Champions</p>
+            <p class="text-2xl font-bold">Dental Fouta</p>
+            <p class="mt-3 text-sm">Golden Boot: <span class="font-semibold">Atou</span></p>
+            <hr class="my-4 border-white/20">
+            <p class="text-sm">Playoffs: Top 2 byes. Quarterfinals → Semifinals → Final & picnic.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Standings -->
+  <section id="standings" class="py-10">
+    <div class="mx-auto container container-narrow px-4">
+      <div class="flex items-end justify-between mb-4">
+        <h3 class="text-2xl font-bold">Standings</h3>
+        <button id="downloadCsv" class="text-sm px-3 py-1.5 rounded-lg bg-slate-900 text-white hover:bg-slate-800">Download CSV</button>
+      </div>
+      <div class="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow">
+        <table class="min-w-full text-sm" id="standingsTable">
+          <thead class="bg-slate-100 text-slate-700">
+            <tr>
+              <th class="px-3 py-2 text-left">Pos</th>
+              <th class="px-3 py-2 text-left">Team</th>
+              <th class="px-3 py-2">GP</th>
+              <th class="px-3 py-2">W</th>
+              <th class="px-3 py-2">D</th>
+              <th class="px-3 py-2">L</th>
+              <th class="px-3 py-2">GF</th>
+              <th class="px-3 py-2">GA</th>
+              <th class="px-3 py-2">GD</th>
+              <th class="px-3 py-2">Pts</th>
+            </tr>
+          </thead>
+          <tbody id="standingsBody"></tbody>
+        </table>
+      </div>
+      <p class="mt-2 text-xs text-slate-500">Sort: Points → Goal Difference → Goals For.</p>
+    </div>
+  </section>
+
+  <!-- Results -->
+  <section id="results" class="py-10 bg-slate-50">
+    <div class="mx-auto container container-narrow px-4">
+      <h3 class="text-2xl font-bold mb-4">Recent Results</h3>
+      <div id="resultsList" class="grid md:grid-cols-2 gap-4"></div>
+    </div>
+  </section>
+
+  <!-- Schedule -->
+  <section id="schedule" class="py-10">
+    <div class="mx-auto container container-narrow px-4">
+      <h3 class="text-2xl font-bold mb-4">Schedule</h3>
+      <div class="overflow-x-auto rounded-2xl border border-slate-200 bg-white shadow">
+        <table class="min-w-full text-sm">
+          <thead class="bg-slate-100 text-slate-700">
+            <tr>
+              <th class="px-3 py-2 text-left">Date</th>
+              <th class="px-3 py-2">Time</th>
+              <th class="px-3 py-2">Match</th>
+              <th class="px-3 py-2">Field</th>
+            </tr>
+          </thead>
+          <tbody id="scheduleBody"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Governance / Bylaws -->
+  <section id="governance" class="py-10 bg-slate-50">
+    <div class="mx-auto container container-narrow px-4">
+      <h3 class="text-2xl font-bold mb-2">Governance</h3>
+      <p class="text-sm text-slate-600">Executive Committee, Disciplinary Committee, and Head of Referees manage league operations and standards.</p>
+      <ul class="mt-4 grid md:grid-cols-2 gap-2 text-sm list-disc list-inside">
+        <li>President</li>
+        <li>Secretary</li>
+        <li>Treasurer</li>
+        <li>League Commissioner</li>
+        <li>Head of Referees</li>
+        <li>Disciplinary Committee</li>
+      </ul>
+      <a class="inline-flex mt-5 items-center px-4 py-2 rounded-lg bg-slate-900 text-white text-sm hover:bg-slate-800" href="./DASL_Bylaws.pdf" target="_blank" rel="noreferrer">Download Bylaws (PDF)</a>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="py-10">
+    <div class="mx-auto container container-narrow px-4">
+      <h3 class="text-2xl font-bold mb-2">Contact</h3>
+      <p class="text-sm text-slate-600">For inquiries, fixtures, or volunteering: <a class="text-emerald-700 underline" href="mailto:league@example.com">league@example.com</a></p>
+    </div>
+  </section>
+
+  <footer class="py-8 text-center text-xs text-slate-500">© <span id="y"></span> Detroit African Soccer League</footer>
+
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+
+    // ===== Data (edit these objects weekly, or replace with fetch from JSON) =====
+    const standingsData = [
+      { team: 'Dental Fouta', GP: 5, W: 4, D: 1, L: 0, GF: 17, GA: 6 },
+      { team: 'Senegal', GP: 5, W: 3, D: 0, L: 2, GF: 17, GA: 14 },
+      { team: 'Nigeria', GP: 5, W: 2, D: 2, L: 1, GF: 8, GA: 8 },
+      { team: 'MVFC', GP: 5, W: 2, D: 1, L: 2, GF: 16, GA: 16 },
+      { team: 'ASC Downtown', GP: 5, W: 1, D: 0, L: 4, GF: 9, GA: 15 },
+      { team: 'AllStars', GP: 5, W: 1, D: 0, L: 4, GF: 9, GA: 17 },
+    ].map(r => ({...r, GD: r.GF - r.GA, Pts: r.W*3 + r.D*1 }));
+
+    const resultsData = [
+      { date: 'Aug 17, 2025', match: 'MVFC 3–1 AllStars' },
+      { date: 'Aug 17, 2025', match: 'Senegal 0–4 Dental Fouta' },
+      { date: 'Aug 17, 2025', match: 'Nigeria 4–1 ASC Downtown' },
+      { date: 'Aug 10, 2025', match: 'MVFC 4–5 ASC Downtown' },
+      { date: 'Aug 10, 2025', match: 'Senegal 8–4 AllStars' },
+      { date: 'Aug 10, 2025', match: 'Nigeria 1–1 Dental Fouta' },
+    ];
+
+    const scheduleData = [
+      { date: 'Jul 27, 2025', time: '7:00 PM', match: 'MVFC vs Dental Fouta', field: 'Livonia Field 10' },
+      { date: 'Jul 27, 2025', time: '7:00 PM', match: 'Senegal vs Nigeria', field: 'Livonia Field 9' },
+      { date: 'Jul 27, 2025', time: '7:00 PM', match: 'AllStars vs ASC Downtown', field: 'Livonia Field 8' },
+      { date: 'Aug 3, 2025', time: '7:00 PM', match: 'ASC Downtown vs Dental Fouta', field: 'Livonia Field 10' },
+      { date: 'Aug 3, 2025', time: '7:00 PM', match: 'MVFC vs Senegal', field: 'Livonia Field 9' },
+      { date: 'Aug 3, 2025', time: '7:00 PM', match: 'Nigeria vs AllStars', field: 'Livonia Field 8' },
+      { date: 'Aug 10, 2025', time: '6:30 PM', match: 'Nigeria vs MVFC', field: 'Livonia Field 10' },
+      { date: 'Aug 10, 2025', time: '6:30 PM', match: 'ASC Downtown vs Senegal', field: 'Livonia Field 9' },
+      { date: 'Aug 10, 2025', time: '6:30 PM', match: 'Dental Fouta vs AllStars', field: 'Livonia Field 8' },
+      { date: 'Aug 17, 2025', time: '6:30 PM', match: 'AllStars vs Senegal', field: 'Livonia Field 10' },
+      { date: 'Aug 17, 2025', time: '6:30 PM', match: 'ASC Downtown vs MVFC', field: 'Livonia Field 9' },
+      { date: 'Aug 17, 2025', time: '6:30 PM', match: 'Dental Fouta vs Nigeria', field: 'Livonia Field 8' },
+      { date: 'Aug 17, 2025', time: '6:30 PM', match: 'Senegal vs Dental Fouta', field: 'Livonia Field 10' },
+      { date: 'Aug 17, 2025', time: '6:30 PM', match: 'MVFC vs AllStars', field: 'Livonia Field 9' },
+      { date: 'Aug 17, 2025', time: '6:30 PM', match: 'ASC Downtown vs Nigeria', field: 'Livonia Field 8' },
+    ];
+
+    // ===== Render Standings =====
+    const standingsBody = document.getElementById('standingsBody');
+    const sorted = standingsData.sort((a,b)=> b.Pts - a.Pts || b.GD - a.GD || b.GF - a.GF);
+    sorted.forEach((r, i) => {
+      const tr = document.createElement('tr');
+      tr.className = i%2? 'bg-white' : 'bg-slate-50';
+      tr.innerHTML = `
+        <td class="px-3 py-2">${i+1}</td>
+        <td class="px-3 py-2 font-medium">${r.team}</td>
+        <td class="px-3 py-2 text-center">${r.GP}</td>
+        <td class="px-3 py-2 text-center">${r.W}</td>
+        <td class="px-3 py-2 text-center">${r.D}</td>
+        <td class="px-3 py-2 text-center">${r.L}</td>
+        <td class="px-3 py-2 text-center">${r.GF}</td>
+        <td class="px-3 py-2 text-center">${r.GA}</td>
+        <td class="px-3 py-2 text-center">${r.GD}</td>
+        <td class="px-3 py-2 text-center font-bold">${r.Pts}</td>`;
+      standingsBody.appendChild(tr);
+    });
+
+    // Download CSV of standings
+    document.getElementById('downloadCsv').addEventListener('click', () => {
+      const headers = ['Pos','Team','GP','W','D','L','GF','GA','GD','Pts'];
+      const rows = sorted.map((r,i)=>[i+1,r.team,r.GP,r.W,r.D,r.L,r.GF,r.GA,r.GD,r.Pts]);
+      const csv = [headers, ...rows].map(r=>r.join(',')).join('\n');
+      const blob = new Blob([csv], {type:'text/csv'});
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'dasl-standings.csv';
+      a.click();
+    });
+
+    // ===== Render Results =====
+    const resultsList = document.getElementById('resultsList');
+    resultsData.forEach(r => {
+      const card = document.createElement('div');
+      card.className = 'rounded-xl border border-slate-200 bg-white p-4 shadow';
+      card.innerHTML = `<p class="text-xs text-slate-500">${r.date}</p><p class="mt-1 font-semibold">${r.match}</p>`;
+      resultsList.appendChild(card);
+    });
+
+    // ===== Render Schedule =====
+    const scheduleBody = document.getElementById('scheduleBody');
+    scheduleData.forEach(row => {
+      const tr = document.createElement('tr');
+      tr.className = 'odd:bg-slate-50';
+      tr.innerHTML = `
+        <td class='px-3 py-2'>${row.date}</td>
+        <td class='px-3 py-2 text-center'>${row.time}</td>
+        <td class='px-3 py-2 font-medium'>${row.match}</td>
+        <td class='px-3 py-2 text-center'>${row.field}</td>`;
+      scheduleBody.appendChild(tr);
+    });
+  </script>
+</body>
+</html>
